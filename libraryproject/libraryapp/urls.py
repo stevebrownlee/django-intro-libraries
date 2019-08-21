@@ -6,6 +6,7 @@ from .views import *
 app_name = "libraryapp"
 urlpatterns = [
     url(r'^books$', list_books, name='list_books'),
+    url(r'^book$', create_book, name='create_book'),
     url(r'^librarians$', list_librarians, name='list_librarians'),
     url(r'accounts/', include('django.contrib.auth.urls')),
 ]
