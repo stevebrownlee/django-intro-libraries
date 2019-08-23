@@ -32,7 +32,7 @@ def create_book(request):
 
             all_libraries = db_cursor.fetchall()
 
-        template_name = 'books/create.html'
+        template_name = 'books/form.html'
         return render(request, template_name, {'all_libraries': all_libraries})
 
     elif request.method == 'POST':
@@ -46,16 +46,39 @@ def create_book(request):
 
         form_data = request.POST
 
-        with sqlite3.connect(Connection.db_path) as conn:
-            db_cursor = conn.cursor()
+        if "book_id" in form_data and int(form_data["book_id"]) > 0:
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
 
-            db_cursor.execute("""
-             INSERT INTO libraryapp_book
-             (title, author, isbn, year_published, location_id, librarian_id)
-             values (?, ?, ?, ?, ?, ?)
-             """,
-            (form_data['title'], form_data['author'],
-                form_data['isbn'], form_data['year_published'],
-                request.user.librarian.id, form_data["location"]))
+                db_cursor.execute("""
+                UPDATE libraryapp_book
+                SET title = ?,
+                    author = ?,
+                    isbn = ?,
+                    year_published = ?,
+                    location_id = ?
+                WHERE id = ?
+                """,
+                    (
+                        form_data['title'], form_data['author'],
+                        form_data['isbn'], form_data['year_published'],
+                        form_data["location"], form_data["book_id"],
+                    )
+                )
 
-        return redirect(reverse('libraryapp:list_books'))
+            return redirect(reverse('libraryapp:list_books'))
+
+        else:
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                INSERT INTO libraryapp_book
+                (title, author, isbn, year_published, location_id, librarian_id)
+                values (?, ?, ?, ?, ?, ?)
+                """,
+                (form_data['title'], form_data['author'],
+                    form_data['isbn'], form_data['year_published'],
+                    request.user.librarian.id, form_data["location"]))
+
+            return redirect(reverse('libraryapp:list_books'))
