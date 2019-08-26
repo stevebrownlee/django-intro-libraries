@@ -1,0 +1,22 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <section id="library-details">
+        <h1>{{ library.title }}</h1>
+        <h2>By {{ library.address }}</h2>
+    </section>
+
+
+    <section id="library-actions" style="display:flex;">
+        <form action="{% url 'libraryapp:library' library.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="actual_method" value="DELETE">
+            <button>Delete</button>
+        </form>
+
+        <form action="{% url 'libraryapp:library_edit_form' library.id %}" method="GET">
+            {% csrf_token %}
+            <button>Edit</button>
+        </form>
+    </section>
+{% endblock %}
