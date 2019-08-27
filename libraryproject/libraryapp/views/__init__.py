@@ -7,5 +7,6 @@ from .libraries.details import library_details
 from .libraries.list import library_list
 
 from .librarians.list import list_librarians
+from .librarians.details import librarian_details
 
 from .connection import Connection
