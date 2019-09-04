@@ -5,7 +5,7 @@ from .views import *
 
 app_name = "libraryapp"
 urlpatterns = [
-    url(r'^$', book_list, name='books'),
+    url(r'^$', home, name='home'),
     url(r'^books$', book_list, name='books'),
     url(r'^books/(?P<book_id>[0-9]+)$', book_details, name="book"),
     url(r'^books/(?P<book_id>[0-9]+)/form$', book_edit_form, name='book_edit_form'),
@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^librarians/(?P<librarian_id>[0-9]+)$', librarian_details, name="librarian"),
 
     url(r'accounts/', include('django.contrib.auth.urls')),
+    url(r'^logout/$', logout_user, name='logout'),
 ]
