@@ -25,7 +25,7 @@ SECRET_KEY = '&y4(4!u+!g7c4%lg_9iq)oyn13%m^7%z^2ft+=jzh$(xmgofe@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nss-libraries.onrender.com']
 
 
 # Application definition
