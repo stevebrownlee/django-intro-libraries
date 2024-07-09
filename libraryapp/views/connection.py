@@ -1,2 +1,5 @@
+from django.conf import settings
+
+
 class Connection:
-    db_path = "/Users/chortlehoort/dev/github/stevebrownlee/library-management/libraryproject/db.sqlite3"
+    db_path = settings.DATABASES['default']['NAME']
